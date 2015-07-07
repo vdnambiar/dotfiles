@@ -213,6 +213,8 @@ alias push_smlc_config="/devvob/lp/tools/config/scripts/sendCfg.pl smlcIp=192.16
 alias dirs="dirs -v"
 alias pu="pushd"
 alias po="popd"
+#Force tmux to always assume that the terminal has 256 color support
+alias tmux="tmux -2"
 
 #####################################
 ## Build stuff
@@ -601,7 +603,6 @@ function add_source_dir()
     find ${SRC_DIR} -name '*.dts' >> ${SRC_FILE_DB}
     find ${SRC_DIR} -name '*.pm' >> ${SRC_FILE_DB}
     find ${SRC_DIR} -name '*.desktop' >> ${SRC_FILE_DB}
-    find ${SRC_DIR} -name '*.yaml' >> ${SRC_FILE_DB}
 
     popd  > /dev/null 2>&1
 
@@ -2925,8 +2926,3 @@ function update_time
 {
     sudo ntpdate time2.chpc.utah.edu 
 }
-
-### export necessary variables for ATF
-export AUTOHOME=~/automation
-
-

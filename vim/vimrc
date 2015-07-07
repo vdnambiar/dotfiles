@@ -64,7 +64,6 @@ set expandtab "replaces tabs with spaces, aka et
 set smarttab "tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
 set softtabstop=4 "edit as if the tabs are 4 character wide
 set shiftround "round indent to multiple of 'shiftwidth'
-set sw=4 "Sets space width - set the auto indentation width
 
 " Set cut/copy buffer as the global OS buffer so you can copy/paste
 " into other applications
@@ -102,6 +101,7 @@ syntax on
 set encoding=utf8
 let base16colorspace=256  "Access colors present in 256 colorspace
 set t_Co=256 "Explicitly tell vim that the terminal supports 256 colors
+"set guifont=Liberation\ Mono\ Powerline\ 10
 colorscheme elflord
 
 set number
@@ -119,21 +119,22 @@ set directory=~/.vim-tmp,/var/tmp
 "Set color scheme - depending on whether it is gvim or vim
 "remember this order is important vim first and then gvim
 if v:progname =~? "vim"
-    set guifont=Monospace\ 12
-    "colors darkblue
+    "set guifont=Monospace\ 12
+    set guifont=Liberation\ Mono\ Powerline\ 10
+    "colorscheme darkblue
     set mouse=a "This activates mouse control in text vim screen on xterm
 endif
 
 if v:progname =~? "vimdiff"
     set guifont=Monospace\ 12
-    "colors darkblue
+    "colorscheme darkblue
     set mouse=a "This activates mouse control in text vimdiff screen on xterm
 endif
 
 if v:progname =~? "gvim"
     set columns=100
     set lines=60
-    colors default
+    colorscheme default
     set guifont=Ubuntu\ Mono\ 11
 		"set guifont=Nimbus\ Mono\ L\ 10
 		"set guifont=Efont\ Fixed\ 9 
@@ -173,12 +174,84 @@ set showcmd		" display incomplete commands
 "setlocal spell spelllang=en_us   "enable spell checking
 
 
+"Set so that the gvim tabs shows only filenames
+function! GuiTabLabel()
+    " add the tab number
+    let label = '['.tabpagenr()
+
+    " modified since the last save?
+    let buflist = tabpagebuflist(v:lnum)
+    for bufnr in buflist
+        if getbufvar(bufnr, '&modified')
+                let label .= '*'
+                break
+        endif
+    endfor
+
+    " count number of open windows in the tab
+    let wincount = tabpagewinnr(v:lnum, '$')
+    if wincount > 1
+        let label .= ', '.wincount
+    endif
+    let label .= '] '
+
+    " add the file name without path information
+    let n = bufname(buflist[tabpagewinnr(v:lnum) - 1])
+    let label .= fnamemodify(n, ':t')
+
+    return label
+endfunction
+set guitablabel=%{GuiTabLabel()}
+
+"set tab heading only if in "vim"
+"Help is available as follows:
+":h setting-tabline
+"Following obtained from here: http://vim.1045645.n5.nabble.com/weird-path-string-on-TAB-line-td1160174.html
+if exists("+showtabline")
+        function MyTabLine()
+                let s = ''
+                let t = tabpagenr()
+                let i = 1
+                while i <= tabpagenr('$')
+                        let buflist = tabpagebuflist(i)
+                        let winnr = tabpagewinnr(i)
+                        let s .= '%' . i . 'T'
+                        let s .= (i == t ? '%1*' : '%2*')
+                        let s .= ' '
+                        "let s .= i . ':'
+                        "let s .= winnr . '/' . tabpagewinnr(i,'$')
+                        let s .= ' %*'
+                        let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
+                        let file = bufname(buflist[winnr - 1])
+                        let file = fnamemodify(file, ':p:t')
+                        if file == ''
+                                let file = '[No Name]'
+                        endif
+                        let s .= file
+                        let i = i + 1
+                endwhile
+                let s .= '%T%#TabLineFill#%='
+                let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
+                return s
+        endfunction
+        set stal=2
+        set tabline=%!MyTabLine()
+        "map <F12> :tabnext<CR>
+        "map! <F12> <C-O>:tabnext<CR>
+        "map <S-F12> :tabprev<CR>
+        "map! <S-F12> <C-O>:tabprev<CR>
+endif 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-map <leader>ev :e! ~/.vimrc<cr> " edit ~/.vimrc
+map <leader>ev :e! ~/.vimrc<cr> "edit vim config file 
+map <leader>et :e! ~/.tmux.conf<cr> "edit tmux config file 
+map <leader>ey :e! ~/.vim/.ycm_extra_conf.py<cr> "edit YouCompleteMe config file  
+map <leader>ep :e! ~/.bash_profile<cr> "edit bash profile
 
+"To close the buffer that you are currently working on
 map <leader>wc :wincmd q<cr>
 
 " moving up and down work as you would expect
@@ -200,7 +273,7 @@ map Q gq
 "Alternate key map (F4) to help do CTRL + A ie, auto increment numbers
 "This is useful in SCREEN sessions where CTRL + A already is trapped for
 "changing windows
-noremap <f4> <c-a>
+"noremap <f4> <c-a>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Functions
@@ -234,10 +307,13 @@ noremap <f4> <c-a>
 let g:NERDTreeQuitOnOpen=0
 " show hidden files in NERDTree
 let NERDTreeShowHidden=1
+"Prevent funny characters for directories
+let g:NERDTreeDirArrows=0
+
 " Toggle NERDTree
-nmap <silent> <leader>k :NERDTreeToggle<cr>
+nmap <silent> <leader>n :NERDTreeToggle<cr>
 " expand to the path of the file in the current buffer
-nmap <silent> <leader>y :NERDTreeFind<cr>
+nmap <silent> <leader>f :NERDTreeFind<cr>
 
 " map fuzzyfinder (CtrlP) plugin
 " nmap <silent> <leader>t :CtrlP<cr>
@@ -275,8 +351,11 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_filetype_specific_completion_to_disable = {'javascript': 1}
 
 "nnoremap <leader>y :YcmForceCompileAndDiagnostics<cr>
-nnoremap <leader>js :YcmCompleter GoTo<CR>  "jump smar
+"jump smart (js)
+nnoremap <leader>js :YcmCompleter GoTo<CR>
+"jump declaration (jd)
 nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+"jump instance (ji)
 nnoremap <leader>ji :YcmCompleter GoToDeclaration<CR>
 
 
