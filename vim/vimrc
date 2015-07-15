@@ -19,8 +19,11 @@ Plugin 'kien/ctrlp.vim' " fuzzy find files
 Plugin 'scrooloose/nerdtree' " file drawer, open with :NERDTreeToggle
 Plugin 'benmills/vimux' "allows vim to interact with tmux
 Plugin 'tpope/vim-fugitive' " the ultimate git helper
+Plugin 'tpope/vim-git' 
 Plugin 'tpope/vim-commentary' " comment/uncomment lines with gcc or gc in visual mode
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe' "Code navigator for C, c++ with back and forth jumps
+Plugin 'SirVer/ultisnips' "code skeletons for repetitive operations
+Plugin 'scrooloose/syntastic' "syntax lint checker
 
 " colorschemes
 "Plugin 'chriskempson/base16-vim'
@@ -350,7 +353,7 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 "let g:ycm_extra_conf_globlist = ['~/repos/*']
 let g:ycm_filetype_specific_completion_to_disable = {'javascript': 1}
 
-"nnoremap <leader>y :YcmForceCompileAndDiagnostics<cr>
+nnoremap <leader>y :YcmForceCompileAndDiagnostics<cr>
 "jump smart (js)
 nnoremap <leader>js :YcmCompleter GoTo<CR>
 "jump declaration (jd)
@@ -364,4 +367,53 @@ nnoremap <leader>ji :YcmCompleter GoToDeclaration<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:airline#extensions#tabline#enabled = 1 "enables buffer tabs when only one tab is open
 "let g:airline_theme = 'tomorrow'
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Enable spell checking 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"We want our cross-machine spell file to be used
+set spellfile=~/src/dotfiles/vim/spell/en.utf-8.add
+" Toggle and untoggle spell checking
+noremap <leader>ss :setlocal spell! spelllang=en_us<cr>
+
+" spelling shortcuts using <leader>
+" ]s next misspelled word
+" [s previous misspelled word
+" zg add to dict
+" z= get suggestions
+noremap <leader>sn ]s
+noremap <leader>sp [s
+noremap <leader>sa zg
+noremap <leader>su z=
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                UltiSnips                                "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" we can't use <tab> as our snippet key since we use that with YouCompleteMe
+let g:UltiSnipsSnippetsDir         = $HOME . '/src/dotfiles/vim/ultisnips'
+" Alt conflicts with Xmonad
+let g:UltiSnipsExpandTrigger       = "<c-s>"
+let g:UltiSnipsListSnippets        = "<c-m-s>"
+let g:UltiSnipsJumpForwardTrigger  = "<right>"
+let g:UltiSnipsJumpBackwardTrigger = "<left>"
+let g:snips_author                 = 'Vijayan Nambiar'
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                syntastic                                "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"let g:syntastic_error_symbol = '.'
+"let g:syntastic_warning_symbol = '.'
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_flake8_args = '--select=F,C9 --max-complexity=10'
+
+let g:syntastic_mode_map = {
+       \ "mode": "active",
+       \ "active_filetypes": [],
+       \ "passive_filetypes": ["dart", "html"] }
+
 
