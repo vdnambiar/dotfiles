@@ -3,6 +3,17 @@ set nocompatible
 " Needed for vundle, will be turned off after vundle inits 
 filetype off
 
+"auto install vundle if it does not exist
+let vundle_exists=1
+let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
+if !filereadable(vundle_readme)
+    echo "Installing Vundle..."
+    echo ""
+    silent !mkdir -p ~/.vim/bundle
+    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/Vundle.vim
+    let vundle_exists=0
+endif
+
 "set runtime path to inc Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 
@@ -392,10 +403,10 @@ noremap <leader>su z=
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " we can't use <tab> as our snippet key since we use that with YouCompleteMe
-let g:UltiSnipsSnippetsDir         = $HOME . '/src/dotfiles/vim/ultisnips'
+let g:UltiSnipsSnippetsDir         = "~/src/dotfiles/vim/ultisnips"
 " Alt conflicts with Xmonad
-let g:UltiSnipsExpandTrigger       = "<c-s>"
-let g:UltiSnipsListSnippets        = "<c-m-s>"
+let g:UltiSnipsExpandTrigger       = "<c-j>"
+let g:UltiSnipsListSnippets        = "<c-m-j>"
 let g:UltiSnipsJumpForwardTrigger  = "<right>"
 let g:UltiSnipsJumpBackwardTrigger = "<left>"
 let g:snips_author                 = 'Vijayan Nambiar'
