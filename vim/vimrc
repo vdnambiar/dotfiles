@@ -35,6 +35,7 @@ Plugin 'tpope/vim-commentary' " comment/uncomment lines with gcc or gc in visual
 Plugin 'Valloric/YouCompleteMe' "Code navigator for C, c++ with back and forth jumps
 Plugin 'SirVer/ultisnips' "code skeletons for repetitive operations
 Plugin 'scrooloose/syntastic' "syntax lint checker
+Plugin 'chazy/cscope_maps' "provides shortcut cscope maps
 
 " colorschemes
 "Plugin 'chriskempson/base16-vim'
