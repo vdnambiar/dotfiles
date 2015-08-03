@@ -128,8 +128,8 @@ set laststatus=2 " show the satus line all the time
 
 "Send all the .swp and .bkp file to another temp directory away from source
 "set nobackup
-set backupdir=~/.vim-tmp,/var/tmp
-set directory=~/.vim-tmp,/var/tmp
+"set backupdir=~/.vim-tmp,/var/tmp
+"set directory=~/.vim-tmp,/var/tmp
 
 "Set color scheme - depending on whether it is gvim or vim
 "remember this order is important vim first and then gvim
@@ -433,3 +433,8 @@ let g:syntastic_mode_map = {
        \ "passive_filetypes": ["dart", "html"] }
 
 
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
