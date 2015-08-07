@@ -375,6 +375,11 @@ nnoremap <leader>js :YcmCompleter GoTo<CR>
 nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
 "jump instance (ji)
 nnoremap <leader>ji :YcmCompleter GoToDeclaration<CR>
+"show data type of variable (display type)
+nnoremap <leader>dt :YcmCompleter GetType<CR>
+"show parent of this class (display parent)
+nnoremap <leader>dp :YcmCompleter GetParent<CR>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => YCM-Generator
