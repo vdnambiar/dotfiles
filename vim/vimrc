@@ -33,7 +33,9 @@ Plugin 'tpope/vim-fugitive' " the ultimate git helper
 Plugin 'tpope/vim-git' 
 Plugin 'tpope/vim-commentary' " comment/uncomment lines with gcc or gc in visual mode
 Plugin 'Valloric/YouCompleteMe' "Code navigator for C, c++ with back and forth jumps
-Plugin 'SirVer/ultisnips' "code skeletons for repetitive operations
+Plugin 'rdnetto/YCM-Generator' "Generates the .ycm_extra_conf.py for a source directory automatically
+Plugin 'SirVer/ultisnips' "snippet engine for repetitive operations
+Plugin 'honza/vim-snippets' "snippet to be used by ultisnips
 Plugin 'scrooloose/syntastic' "syntax lint checker
 Plugin 'chazy/cscope_maps' "provides shortcut cscope maps
 
@@ -128,8 +130,8 @@ set laststatus=2 " show the satus line all the time
 
 "Send all the .swp and .bkp file to another temp directory away from source
 "set nobackup
-"set backupdir=~/.vim-tmp,/var/tmp
-"set directory=~/.vim-tmp,/var/tmp
+set backupdir=~/.vim-tmp,/var/tmp
+set directory=~/.vim-tmp,/var/tmp
 
 "Set color scheme - depending on whether it is gvim or vim
 "remember this order is important vim first and then gvim
@@ -374,6 +376,11 @@ nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
 "jump instance (ji)
 nnoremap <leader>ji :YcmCompleter GoToDeclaration<CR>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => YCM-Generator
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>gc :YcmGenerateConfig<CR>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Airline
@@ -408,13 +415,16 @@ noremap <leader>su z=
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " we can't use <tab> as our snippet key since we use that with YouCompleteMe
-let g:UltiSnipsSnippetsDir         = "~/src/dotfiles/vim/ultisnips"
+let g:UltiSnipsExpandTrigger       = "<c-k>"
+let g:UltiSnipsListSnippets        = "<c-m-k>"
+"let g:UltiSnipsSnippetsDir         = "~/src/dotfiles/vim/ultisnips"
 " Alt conflicts with Xmonad
-let g:UltiSnipsExpandTrigger       = "<c-j>"
-let g:UltiSnipsListSnippets        = "<c-m-j>"
 let g:UltiSnipsJumpForwardTrigger  = "<right>"
 let g:UltiSnipsJumpBackwardTrigger = "<left>"
 let g:snips_author                 = 'Vijayan Nambiar'
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
