@@ -201,7 +201,7 @@ export CSCOPE_DB=
 #####################################
 ## Aliases
 #####################################
-#alias ls="ls --color=tty"
+alias ls="ls --color=tty"
 alias hddir="cd /tpcommonvob/LPDCommon/hd_health/src"
 alias pmdir="cd /wlgvob/tools/pm/src"
 alias install_server="xterm -e telnet 192.168.79.199"
