@@ -166,9 +166,9 @@ ID_USER=`id | awk '{print $1}' | awk -F"(" '{print $2}'| awk -F")" '{print $1}'`
 #CT_VIEW=`cleartool pwv | grep "Set view" | awk '{print $3}'`
 #CT_VIEW=`git branch | grep "*" | awk '{print $2}' 2> /dev/null`
 if [[ $UID -eq 0 ]]; then
-PS1='${HOSTNAME} [${PWD}][${ID_USER}] [ ${CT_VIEW} ] \n# '
+PS1='${ID_USER}@${HOSTNAME} [${PWD}]\n# '
 else
-PS1='${HOSTNAME} [${PWD}][${ID_USER}] [ ${CT_VIEW} ] \n$ '
+PS1='${ID_USER}@${HOSTNAME} [${PWD}]\n$ '
 fi
 export PS1
 
