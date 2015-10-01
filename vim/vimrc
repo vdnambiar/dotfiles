@@ -37,6 +37,7 @@ Plugin 'rdnetto/YCM-Generator' "Generates the .ycm_extra_conf.py for a source di
 Plugin 'SirVer/ultisnips' "snippet engine for repetitive operations
 Plugin 'honza/vim-snippets' "snippet to be used by ultisnips
 Plugin 'scrooloose/syntastic' "syntax lint checker
+Plugin 'vim-scripts/taglist.vim'  "plugin to talk to exuberant-ctags and provide taglist navbar
 Plugin 'chazy/cscope_maps' "provides shortcut cscope maps
 
 " colorschemes
@@ -120,8 +121,6 @@ let base16colorspace=256  "Access colors present in 256 colorspace
 set t_Co=256 "Explicitly tell vim that the terminal supports 256 colors
 "set guifont=Liberation\ Mono\ Powerline\ 10
 colorscheme elflord
-
-set number
 
 set autoindent " automatically set indent of new line
 set smartindent
@@ -253,20 +252,19 @@ if exists("+showtabline")
         endfunction
         set stal=2
         set tabline=%!MyTabLine()
-        "map <F12> :tabnext<CR>
-        "map! <F12> <C-O>:tabnext<CR>
-        "map <S-F12> :tabprev<CR>
-        "map! <S-F12> <C-O>:tabprev<CR>
 endif 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-map <leader>ev :e! ~/.vimrc<cr> "edit vim config file 
-map <leader>et :e! ~/.tmux.conf<cr> "edit tmux config file 
-map <leader>ey :e! ~/.vim/.ycm_extra_conf.py<cr> "edit YouCompleteMe config file  
-map <leader>ep :e! ~/.bash_profile<cr> "edit bash profile
+"edit vim config file 
+map <leader>ev :e! ~/.vimrc<cr>
+"edit tmux config file 
+map <leader>et :e! ~/.tmux.conf<cr> 
+"edit YouCompleteMe config file  
+map <leader>ey :e! ~/.vim/.ycm_extra_conf.py<cr> 
+"edit bash profile
+map <leader>ep :e! ~/.bash_profile<cr>
 
 "To close the buffer that you are currently working on
 map <leader>wc :wincmd q<cr>
@@ -279,10 +277,12 @@ map <leader>wc :wincmd q<cr>
 nmap \t :set ts=4 sts=4 sw=4 noet<cr>
 nmap \s :set ts=4 sts=4 sw=4 et<cr>
 
-"list all buffers and move through them
-map <C-l> :buffers<CR>
-"map <C-9> :bp<CR>
-"map <C-0> :bn<CR>
+"list all buffers 
+map <leader>l :buffers<cr>
+"show next buffer
+map <F12> :bn<CR>
+"show prev buffer
+map <C-F12> :bp<CR>
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -336,7 +336,6 @@ nmap <silent> <leader>f :NERDTreeFind<cr>
 " nmap <silent> <leader>t :CtrlP<cr>
 " r shortcut stands for recent file lookup
 nmap <silent> <leader>r :CtrlPMixed<cr>
-let g:ctrlp_map='<leader>t'
 let g:ctrlp_dotfiles=1
 let g:ctrlp_working_path_mode = 'ra'
 
@@ -421,8 +420,8 @@ noremap <leader>su z=
 
 " we can't use <tab> as our snippet key since we use that with YouCompleteMe
 let g:UltiSnipsExpandTrigger       = "<c-k>"
-let g:UltiSnipsListSnippets        = "<c-m-k>"
-"let g:UltiSnipsSnippetsDir         = "~/src/dotfiles/vim/ultisnips"
+let g:UltiSnipsListSnippets        = "<c-l>"
+let g:UltiSnipsSnippetsDir         = $HOME . '/src/dotfiles/vim/ultisnips'
 " Alt conflicts with Xmonad
 let g:UltiSnipsJumpForwardTrigger  = "<right>"
 let g:UltiSnipsJumpBackwardTrigger = "<left>"
@@ -446,6 +445,26 @@ let g:syntastic_mode_map = {
        \ "mode": "active",
        \ "active_filetypes": [],
        \ "passive_filetypes": ["dart", "html"] }
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                       vim-taglist                                       "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <silent> <leader>t :TlistToggle<cr>
+"When taglist window opens, set focus to this window
+let g:Tlist_GainFocus_On_ToggleOpen = 1
+"When taglist is the only window left open, quite vim when you type ":q"
+let g:Tlist_Exit_OnlyWindow = 1
+"Jump to selected tag on single mouse click from taglist window
+let g:Tlist_Use_SingleClick = 1
+"To show the taglist for only the current open file and hide all others
+"let g:Tlist_Show_One_File = 1
+"Auto close taglist fold for files that are not currently displayed
+"let g:Tlist_File_Fold_Auto_Close = 1
+"Create the tag list on the right side of vim
+let g:Tlist_Use_Right_Window = 1
+"If using in a GUI mode, enabling the following shows the tags in a popup
+"let g:Tlist_Show_Menu = 1
 
 
 " Uncomment the following to have Vim jump to the last position when

@@ -51,7 +51,7 @@ export PS1
 #
 ################################
 #export CROSS_COMPILE=ppc_82xx-
-PATH=$PATH:~/bin:/usr/local/bin:/source/tools/cbs/bin:${HOME}/bin:/sbin:/bin:~/templates/scripts:/usr/sbin:/usr/bin:.:/opt/sourcenav/bin
+PATH=~/bin:/usr/local/bin:${PATH}:/source/tools/cbs/bin:${HOME}/bin:/sbin:/bin:~/templates/scripts:/usr/sbin:/usr/bin:.:/opt/sourcenav/bin
 export PATH
 
 ############################
@@ -130,10 +130,11 @@ umask 002
 CLEARCASE_BIN=/opt/rational/clearcase/bin
 CLEARQUEST_BIN=/opt/rational/clearquest/bin
 WIND_RIVER_LINUX_BIN=/opt/wrl
-ECLIPSE_BIN=/opt/eclipse
+#ECLIPSE_BIN=/opt/eclipse
+ECLIPSE_BIN=/home/vnambiar/Eclipse_Mars_4_5_0
 NX_BIN=/usr/NX/bin
 ADVENTNET_BIN=~/snmp/AdventNet/C-Agent
-PATH=${PATH}:${CLEARCASE_BIN}:${ECLIPSE_BIN}:${NX_BIN}:${ADVENTNET_BIN}:${CLEARQUEST_BIN}:${WIND_RIVER_LINUX_BIN}
+PATH=${ECLIPSE_BIN}:${PATH}:${CLEARCASE_BIN}:${NX_BIN}:${ADVENTNET_BIN}:${CLEARQUEST_BIN}:${WIND_RIVER_LINUX_BIN}
 export MASTER_ROOT=/tpos/tlp/masters
 
 
