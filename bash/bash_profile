@@ -2927,3 +2927,10 @@ function update_time
 {
     sudo ntpdate time2.chpc.utah.edu 
 }
+
+function rebuild_ctag_db
+{
+    pushd ~ >> /dev/null
+    time ctags -R --c++-kinds=+p --c-kinds=+p --fields=+liaS --extra=+q --language-force=C++ -f ~/tags rfs
+    popd >> /dev/null
+}
