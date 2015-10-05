@@ -40,6 +40,8 @@ Plugin 'scrooloose/syntastic' "syntax lint checker (works for js, c)
 Plugin 'chazy/cscope_maps' "provides shortcut cscope maps
 Plugin 'vim-scripts/a.vim' "provides ability to toggle between cpp and hpp file
 Plugin 'majutsushi/tagbar' "better plugin (when compared to taglist) to talk to exuberant-ctags and provide tag navbar
+Plugin 'jistr/vim-nerdtree-tabs' "plugin to make NERD tree mirror state across all open tabs in VIM
+"Plugin 'gcmt/taboo.vim' "Improve the appearance of the filename when in TABBED mode
 
 " colorschemes
 "Plugin 'chriskempson/base16-vim'
@@ -54,7 +56,6 @@ Plugin 'jelera/vim-javascript-syntax'
 "jscs - java script code style
 "benmills/vimux - Allows vim to interact with tmux
 "js-syntax
-"vim-javascript
 "supertab
 "tabular
 "presenting
@@ -193,70 +194,6 @@ set showcmd		" display incomplete commands
 "setlocal spell spelllang=en_us   "enable spell checking
 
 
-"Set so that the gvim tabs shows only filenames
-function! GuiTabLabel()
-    " add the tab number
-    let label = '['.tabpagenr()
-
-    " modified since the last save?
-    let buflist = tabpagebuflist(v:lnum)
-    for bufnr in buflist
-        if getbufvar(bufnr, '&modified')
-                let label .= '*'
-                break
-        endif
-    endfor
-
-    " count number of open windows in the tab
-    let wincount = tabpagewinnr(v:lnum, '$')
-    if wincount > 1
-        let label .= ', '.wincount
-    endif
-    let label .= '] '
-
-    " add the file name without path information
-    let n = bufname(buflist[tabpagewinnr(v:lnum) - 1])
-    let label .= fnamemodify(n, ':t')
-
-    return label
-endfunction
-set guitablabel=%{GuiTabLabel()}
-
-"set tab heading only if in "vim"
-"Help is available as follows:
-":h setting-tabline
-"Following obtained from here: http://vim.1045645.n5.nabble.com/weird-path-string-on-TAB-line-td1160174.html
-if exists("+showtabline")
-        function MyTabLine()
-                let s = ''
-                let t = tabpagenr()
-                let i = 1
-                while i <= tabpagenr('$')
-                        let buflist = tabpagebuflist(i)
-                        let winnr = tabpagewinnr(i)
-                        let s .= '%' . i . 'T'
-                        let s .= (i == t ? '%1*' : '%2*')
-                        let s .= ' '
-                        "let s .= i . ':'
-                        "let s .= winnr . '/' . tabpagewinnr(i,'$')
-                        let s .= ' %*'
-                        let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
-                        let file = bufname(buflist[winnr - 1])
-                        let file = fnamemodify(file, ':p:t')
-                        if file == ''
-                                let file = '[No Name]'
-                        endif
-                        let s .= file
-                        let i = i + 1
-                endwhile
-                let s .= '%T%#TabLineFill#%='
-                let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
-                return s
-        endfunction
-        set stal=2
-        set tabline=%!MyTabLine()
-endif 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -323,18 +260,29 @@ map Q gq
 " => Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                NERD TREE
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " close NERDTree after a file is opened
 let g:NERDTreeQuitOnOpen=0
 " show hidden files in NERDTree
-let NERDTreeShowHidden=1
+let g:NERDTreeShowHidden=1
 "Prevent funny characters for directories
 let g:NERDTreeDirArrows=0
 
-" Toggle NERDTree
-nmap <silent> <leader>n :NERDTreeToggle<cr>
 " expand to the path of the file in the current buffer
 nmap <silent> <leader>f :NERDTreeFind<cr>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                NERD TREE TABS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Toggle NERDTreeTabs
+nmap <silent> <leader>n :NERDTreeTabsToggle<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"               CTRLP 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " map fuzzyfinder (CtrlP) plugin
 " nmap <silent> <leader>t :CtrlP<cr>
 " r shortcut stands for recent file lookup
@@ -397,6 +345,8 @@ let g:airline#extensions#tabline#enabled = 1 "enables buffer tabs when only one 
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 let g:airline#extensions#whitespace#checks = [ ]
+let g:airline#extensions#tabline#fnamemod = ':t' "Make sure that the tabs only contain filename and not the full path 
+let g:airline#extensions#tabline#tab_nr_type = 1 "Show tab number 
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
