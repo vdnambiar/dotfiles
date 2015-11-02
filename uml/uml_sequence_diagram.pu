@@ -1,0 +1,89 @@
+@startuml
+'This UML drawing shows examples of sequence drawing possible
+
+title A __Test__ to see what can be achieved with //Sequence Diagrams// in PlantUML
+
+'automatically add number to sequence messages
+autonumber
+
+
+== Initialization ==
+Component1 -> Component2: Authentication Request
+activate Component2
+Component2 --> Component1: Authentication Response
+Component1 -> Component2: Another authentication Request
+Component1 <-- Component2: another authentication Response
+
+== Testing ==
+Component3 -> Component2: Test
+Component2 --> Component3: Test Ack
+Component3 -> Component3: Test message. \nTo Self.
+Component3 -x Component1: The X Denotes this message was lost
+Component3 ->> Component1: Thin arrow drawing
+
+== Short Object Lifeline ==
+Component3 -> Component9: <<createRequest>>
+activate Component9 #green
+Component9 -> Component3: Work Completed
+deactivate Component9
+Component1 -> Component5: **//init packet//** #red
+activate Component5 #grey
+Component5 -> Component1: **""done packet""**
+deactivate Component5
+destroy Component5
+
+'draw a blue box around these 2 participants
+box "Internal Service" #LightBlue
+participant Component5
+participant Component9
+end box
+
+'Inject notion of delay here
+...
+
+note left of Long
+This is **bold**
+This is //italics//
+This is ""monospaced""
+This is --stroked --
+This is __underlined__
+This is ~~waved~~
+end note
+
+'hex note
+hnote over Component3 #green
+This is a test
+endhnote
+
+'rectangle note
+rnote over DP #pink
+This is the datapath
+endrnote
+
+'This is <back:cadetblue ><size:18>displayed</size></back> __right of__ Component1.
+note right of Component1
+This is <size:18>displayed</size> __right of__ Component1.
+end note
+
+'Breaks the diagram across pages
+newpage The title for this new page
+Component2 --> Component1: Message sent on another page
+Long -> Component3: Another test message
+
+'Inject notion of delay here
+...
+
+== Messaging ==
+Component3 -> "<color green> Component with **really** long green name </color>" as Long: Message Component with long name
+
+'Inject some spacing here
+|||
+
+Long <--> Component3: Bi-directional arrow to Component3
+Long ->o DP: Different arrow ending
+Long -[#red]> Component1: Red Arrow Msg
+Component1 -[#green]> Long: Green Arrow Msg
+Component1 -[#purple]> Component2: Purple Arrow Msg
+deactivate Component2
+
+@enduml

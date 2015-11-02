@@ -41,6 +41,8 @@ Plugin 'chazy/cscope_maps' "provides shortcut cscope maps
 Plugin 'vim-scripts/a.vim' "provides ability to toggle between cpp and hpp file
 Plugin 'majutsushi/tagbar' "better plugin (when compared to taglist) to talk to exuberant-ctags and provide tag navbar
 Plugin 'jistr/vim-nerdtree-tabs' "plugin to make NERD tree mirror state across all open tabs in VIM
+Plugin 'aklt/plantuml-syntax' "Plugin to provide syntax hightlight for plantuml and execute the plantuml binary to visualize the text using graphviz and plantuml
+"Plugin 'jalcine/cmake.vim' "Provide cmake integration with vim
 "Plugin 'gcmt/taboo.vim' "Improve the appearance of the filename when in TABBED mode
 
 " colorschemes
@@ -406,6 +408,12 @@ let g:syntastic_mode_map = {
 nmap <silent> <leader>t :TagbarToggle<cr>
 "Replace default arrows with + and -, since arrow icons don't display well over putty
 let g:tagbar_iconchars = ['+', '-']
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                       plantuml-syntax                                   "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:plantuml_executable_script='java -jar /home/vnambiar/uml/plantuml.jar'
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

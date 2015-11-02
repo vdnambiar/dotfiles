@@ -1,0 +1,87 @@
+@startuml
+title A __test__ to see options available for **class diagrams** in PlantUML
+
+class flightSuperClass
+class flightSuperSuperClass
+
+'Create package class
+package "myFlightPackage" {
+    class classComposite1
+    class flight
+}
+
+'Do the following to add functions
+'characters in front show the following
+'- private
+'# protected
+'~ package private
+'+ public
+class flight {
+    Explanation for what this class is about.
+    This can go for couple of lines ..
+    ==
+    different subsection
+    ..
+    yet another subsection
+    --
+    + {abstract} void abstractMethod()
+    + int regularMethod(flight &fl)
+    # flightNumber : Integer
+    ~ {static} void staticMethod (integer)
+    __ private data __
+    - departureTime : Date
+}
+
+note "These objects are related" as N1
+flight .. N1
+flightSuperSuperClass .. N1
+flightSuperSuperClass .. N1
+classComposite1 .. N1
+
+'The process to show inheritance
+flight <|-- flightSuperClass : inherits
+
+'flightSuperSuperClass inherits from flightSuperClass
+flightSuperClass <|-- flightSuperSuperClass : inherits
+
+classComposite1 *-- flight : composition\ncontains flight class 
+
+class Car
+Driver - Car : drives >
+Car *- Wheel : have 4 >
+Car -- Person : < owns
+
+'abstract class representation
+abstract class AbstractListClass
+
+'interface class representation
+interface List
+
+'enum representation
+enum TimeUnit {
+    DAYS
+    HOURS
+    MINUTES
+}
+
+'annotation representation
+annotation SuppressWarnings
+
+class newClass {
+    - hiddenMember1 : Integer
+    - hiddenMember2 : String
+    + openMethod1()
+    + openMethod2()
+}
+
+'hide data members for the above class from being displayed
+'can also be used to hide entire classes
+hide newClass fields
+
+note left of newClass: data members are hidden
+
+'define your own spot for the class
+class myClassWithMySpot << (M,LightPink) >>
+
+
+@enduml

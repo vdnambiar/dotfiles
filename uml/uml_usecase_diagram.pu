@@ -1,0 +1,47 @@
+@startuml
+
+title A __test__ to see what can be done with <b>usecase diagrams</b>
+
+'Usecase are defined here
+usecase (backup\ndata) as (bkp)
+(write user data) as (write_data)
+usecase test_case  as "
+  ..**test case title**..
+  You can use several lines to describes the use case as 
+  seen here."
+(read user data) as (read_data)
+
+'Actors are defined below
+:NFS client: as nfs_client <<Virtual Machine>>
+actor :Backup\nClient: as bkp_client <<Virtual Machine>>
+actor :SVT Stack: as svt_stack
+
+'Communications between actors and usecases are defined below
+'Also single dash in arrow attempts to horizontally align entities as below
+nfs_client -> write_data: Request to write data
+write_data --> svt_stack: Request forwarded to our FS
+bkp_client --> write_data: Backup data to be written
+svt_stack --> bkp
+'Create extends arrows if one actor or use case extends another one
+svt_stack --|> test_case
+note right of svt_stack
+This is the Filesystem stack.
+end note
+
+nfs_client ..> read_data: Request to read data
+'Also single dot in arrow attempts to horizontally align entities with dashed lines as below
+read_data .> svt_stack: Request forwarded to our FS
+bkp_client --> read_data: Backup data to be read 
+
+rectangle transaction {
+'Speicfying position (right, left, up, down) within the arrow allows placing certain objects in particular 
+new_client_1 -right-> bkp
+new_client_2 -r-> bkp
+new_client_3 -do-> bkp
+}
+
+'to get a new page. Note all context is forgotten on the new page
+newpage
+new_client_4 -do-> (bkp)
+
+@enduml

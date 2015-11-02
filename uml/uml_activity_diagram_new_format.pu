@@ -1,0 +1,116 @@
+@startuml
+
+title A __test__ to see what can be done with **Activity Diagrams (Beta)** in //PlantUML//
+
+start
+
+'new_way: label arrows as follows
+-> setup all entities;
+
+'new_way: Create an activity
+partition "Init Sutff" {
+:Initialization;
+}
+
+'multi-line notes. It auto-attaches to previous activity
+note left
+This note is on
+several lines.
+end note
+
+partition "Graphviz" {
+'new_Way: Branching has changed
+if (Graphviz installed?) then (yes)
+:process all\ndiagrams;
+else (no)
+:process only
+__sequence__ and __activity__ diagrams;
+endif
+}
+
+'new_way: different activity box shapes (SDL)
+split 
+:default ativity box;
+split again
+:rectangle box]
+split again
+:Process box|
+split again
+:convex box <
+split again
+:concave box >
+split again
+:i > 5 }
+end split
+
+:foo1;
+
+'new_way: elseif option
+if (Is the test true?) then (yes)
+    :Activity when true;
+    note left: This is a note
+    :do this;
+elseif (Is something else true?) then (yes)
+    :Activity when true here;
+    :do that;
+else (nothing)
+    :dont do anything;
+endif
+
+'new_way: repeat while loops
+repeat
+    :read data;
+    :generate diagrams;
+repeat while (more data?)
+
+'new_way: while loop
+'notice how the arrows where labeled using (yes) and (no more data)
+while (data available?) is (yes)
+    :read data;
+    :generate diagrams;
+endwhile (no more data)
+
+'new_way: to show parallel processing
+if (multiprocessor?) then (yes)
+    fork
+        :Treatment 1;
+    fork again
+        :Treatment 2;
+    end fork
+else (single_core)
+    -[#blue]-> serial_operation;
+    :Treatment 1;
+    note right
+    This note is on several
+    //lines// and can
+    contain <b>HTML</b>
+    ====
+    * Calling the method ""foo()"" is prohibited
+    # This is how to create a numbered bullet
+    end note
+    -[#green]-> serial_operation;
+    :Treatment 2;
+endif
+
+'new_way: dummy header
+header
+This is a 
+long __dummy__ header
+end header
+
+'new_way: dummy footer
+footer
+This is an
+unncessary __dummy__ footer
+end footer
+
+'new_way: legend
+legend
+this is the legend
+end legend
+
+'Can also use "end" to get a similar effect
+stop
+
+
+@enduml

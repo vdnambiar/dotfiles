@@ -2934,3 +2934,8 @@ function rebuild_ctag_db
     time ctags -R --c++-kinds=+p --c-kinds=+p --fields=+liaS --extra=+q --language-force=C++ -f ~/tags rfs
     popd >> /dev/null
 }
+
+function start_uml
+{
+    java -jar /home/vnambiar/uml/plantuml.jar &
+}

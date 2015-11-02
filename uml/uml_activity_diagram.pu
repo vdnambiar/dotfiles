@@ -1,0 +1,52 @@
+@startuml
+
+title A __test__ to see what can be done with **Activity Diagrams** in //PlantUML//
+
+'Create a top, label arrow and create activity called "Initialization"
+partition "Check Conditions" {
+
+'Create sub parition and set the background color to be different
+partition "When Conditions Are True" LightSkyBlue {
+(*top) --> [setup all entities] Initialization
+
+if "Some test" then
+    --> [true] "Activity When True"
+    --> "Another activity"
+    'create code synchronization point
+    --> ===B1===
+}
+else
+    if "some other test" then
+        --> [true] "Activity when True in nest"
+        'create code synchronization point
+        --> ===B1===
+    else
+        --> [false] "Avtivity when False in nest" 
+        'create code synchronization point
+        --> ===B1===
+    endif
+endif
+}
+
+'To write a long activity description do as follows
+--> "this <size:20>activity</size> is <b>very</b>
+<color:red>long2</color> and defined on several
+lines that contains many <i>text</i>" as A1
+
+note left: This branch is interesting
+
+'To create a branch structure without "if" use the activity
+'name and the arrow directions
+A1 -right-> [Going right] "Test activity"
+A1 -l-> [Going left] "Left Activity"
+A1 -d-> [Going down] "Down Activity"
+
+'multi-line notes. It auto-attaches to previous activity
+note left
+This note is on
+several lines.
+end note
+
+--> (*)
+
+@enduml
