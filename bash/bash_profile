@@ -2937,5 +2937,5 @@ function rebuild_ctag_db
 
 function start_uml
 {
-    java -jar /home/vnambiar/uml/plantuml.jar &
+    java -jar ~/bin/plantuml.jar &
 }

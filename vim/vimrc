@@ -413,7 +413,7 @@ let g:tagbar_iconchars = ['+', '-']
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                       plantuml-syntax                                   "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:plantuml_executable_script='java -jar /home/vnambiar/uml/plantuml.jar'
+let g:plantuml_executable_script='java -jar /home/vnambiar/bin/plantuml.jar'
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
