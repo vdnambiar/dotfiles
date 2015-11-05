@@ -2931,7 +2931,7 @@ function update_time
 function rebuild_ctag_db
 {
     pushd ~ >> /dev/null
-    time ctags -R --c++-kinds=+p --c-kinds=+p --fields=+liaS --extra=+q --language-force=C++ -f ~/tags rfs
+    time ctags -R --c++-kinds=+p --c-kinds=+p --fields=+liaS --extra=+q --language-force=C++ -f ~/tags `pwd`
     popd >> /dev/null
 }
 
