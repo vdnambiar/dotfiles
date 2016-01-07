@@ -1,0 +1,49 @@
+!
+! Comments begin with a "!" character.
+! this file configures the appearance of uxterm and xterm terminals
+! To apply it for this session you need to run
+!   xrdb -merge ~/.Xresources
+!
+! To make it effective across sessions you need to add it to the autostart
+! file of the window manager. Eg: xfce4-session-settings
+
+XTerm*background:         black
+XTerm*foreground:         white
+XTerm*cursorColor:        white
+XTerm*VT100.geometry:     80x25
+
+!XTerm*font:               terminus-12
+XTerm*faceName:           Terminus:style=Regular:size=9
+XTerm*dynamicColors:      true
+XTerm*utf8:               2
+XTerm*eightBitInput:      true
+XTerm*saveLines:          8192
+XTerm*scrollKey:          true
+XTerm*scrollTtyOutput:    false
+XTerm*scrollBar:          true
+XTerm*rightScrollBar:     true
+XTerm*jumpScroll:         true
+XTerm*multiScroll:        true
+XTerm*toolBar:            false
+
+UXTerm*background:         black
+UXTerm*foreground:         white
+UXTerm*cursorColor:        white
+UXTerm*VT100.geometry:     90x30
+
+UXTerm*faceName:           Terminus:style=Regular:size=9
+! UXTerm*font:              -*-dina-medium-r-*-*-16-*-*-*-*-*-*-*
+
+!UXTerm*font:               terminus-10
+UXTerm*dynamicColors:      true
+UXTerm*utf8:               2
+UXTerm*eightBitInput:      true
+UXTerm*saveLines:          8192
+UXTerm*scrollKey:          true
+UXTerm*scrollTtyOutput:    false
+UXTerm*scrollBar:          true
+UXTerm*rightScrollBar:     true
+UXTerm*jumpScroll:         true
+UXTerm*multiScroll:        true
+UXTerm*toolBar:            false
+
