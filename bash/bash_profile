@@ -15,7 +15,6 @@ export HOSTNAME
 # Figure out the OS
 ############################
 OS_NAME=`uname -s`
-CYGWIN_NT-10.0
 
 ################################
 # Set colorful Prompt
