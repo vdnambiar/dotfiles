@@ -1,0 +1,17 @@
+.metadata/*
+*.bak
+output/*
+*.pyc
+*.class
+*.swp
+*~
+*.o.cmd
+*.mod.c
+*.mod.o
+*.o
+*.order
+*.ko.cmd
+.tmp_versions
+build/*
+*.png
+*.spl

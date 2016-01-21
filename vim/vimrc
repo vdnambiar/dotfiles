@@ -144,7 +144,8 @@ if v:progname =~? "vim"
     "set guifont=Monospace\ 12
     set guifont=Liberation\ Mono\ Powerline\ 10
     "colorscheme darkblue
-    set mouse=a "This activates mouse control in text vim screen on xterm
+    "set mouse=a "This activates mouse control in text vim screen on xterm but disables mouse copy paste
+    set mouse=  "This disables  mouse control in text vim screen on xterm and allows mouse copy paste operations
 endif
 
 if v:progname =~? "vimdiff"
@@ -437,10 +438,10 @@ if has("cscope")
     " if you want the reverse search order.
     set csto=0
 
-    let s:CSCOPE_DB = "/home/vnambiar/cscope/rfs.out"
-    if filereadable(s:CSCOPE_DB)
-        silent exe 'cs add '. s:CSCOPE_DB
-    endif
+ "    let s:CSCOPE_DB = "/home/vnambiar/cscope/rfs.out"
+ "    if filereadable(s:CSCOPE_DB)
+ "        silent exe 'cs add '. s:CSCOPE_DB
+ "    endif
 
     " show msg when any other cscope db added
     set cscopeverbose

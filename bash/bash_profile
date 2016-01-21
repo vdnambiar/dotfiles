@@ -5,52 +5,21 @@
 #	. ~/.bashrc
 #fi
 
-# User specific environment and startup programs
-unset USERNAME
-
-# Most applications support several languages for their output.
-# To make use of this feature, simply uncomment one of the lines below or
-# add your own one (see /usr/share/locale/locale.alias for more codes)
-#
-#export LANG=de_DE.UTF-8	# uncomment this line for German output
-#export LANG=fr_FR.UTF-8	# uncomment this line for French output
-#export LANG=es_ES.UTF-8	# uncomment this line for Spanish output
-
-
-# Some people don't like fortune. If you uncomment the following lines,
-# you will have a fortune each time you log in ;-)
-
-#if [ -x /usr/bin/fortune ] ; then
-#    echo
-#    /usr/bin/fortune
-#    echo
-#fi
-
 ################################
 # Set HOSTNAME variable
 ################################
 HOSTNAME=`hostname`
 export HOSTNAME
 
-
 ################################
-# Set Prompt
+# Set colorful Prompt
 ################################
-ID_USER=`id | awk '{print $1}' | awk -F"(" '{print $2}'| awk -F")" '{print $1}'`
-PS1='${HOSTNAME} [${PWD}][${ID_USER}] [ `if [ -f /JAILID ]; then cat /JAILID; fi` ] \n$ '
+PS1='\[\033[32m\]\u@\h \[\033[33m\]\w\[\033[36m\]`__git_ps1`\[\033[0m\]\n$ '
 export PS1
 
 ################################
-# Setup CVS
+# Setup path to common binaries
 ################################
-#export CVSROOT=:pserver:vnambiar@birch:/source/cvs/cvsroot-cbs
-#export CVS_RSH=/usr/bin/ssh
-
-
-################################
-#
-################################
-#export CROSS_COMPILE=ppc_82xx-
 PATH=~/bin:/usr/local/bin:${PATH}:/source/tools/cbs/bin:${HOME}/bin:/sbin:/bin:~/templates/scripts:/usr/sbin:/usr/bin:.:/opt/sourcenav/bin
 export PATH
 
@@ -58,69 +27,6 @@ export PATH
 # Figure out the OS
 ############################
 OS_NAME=`uname -s`
-
-############################
-#Solaris specific ENV values
-############################
-if [ ${OS_NAME} == "SunOS" ]; then
-
-umask 002
-TIMESTEN_LIB=/opt/TimesTen/tt608/lib
-KDE_LIBS=/opt/csw/kde-gcc/lib
-GCC_LIBS=/opt/csw/gcc3/lib
-STD_CPP_LIBS=/opt/local/lib
-export LD_LIBRARY_PATH=/usr/lib:/usr/openwin/lib:/usr/ucblib:/etc/lib:/usr/ccs/lib:/lib:${TIMESTEN_LIB}:${KDE_LIBS}:${GCC_LIBS}:${STD_CPP_LIBS}
-
-SOLARIS_MAKE=/usr/ccs/bin
-SOLARIS_SFW_BIN=/opt/sfw/bin:/usr/sfw/bin
-SOLARIS_SFW_SBIN=/opt/sfw/sbin:/usr/sfw/sbin
-SOLARIS_CSW=/opt/csw/bin:/opt/csw/sbin
-SOLARIS_CLEARCASE_BIN=/opt/rational/clearcase/bin
-SOLARIS_VIM=/home/vnambiar/bin
-XAUTH_BIN=/usr/X/bin
-KDE_BIN=/opt/csw/kde-gcc/bin
-GCC_BIN=/opt/csw/gcc3/bin
-PATH=${PATH}:${SOLARIS_MAKE}:${SOLARIS_SFW_BIN}:${XAUTH_BIN}:${KDE_BIN}:${SOLARIS_SFW_SBIN}:${GCC_BIN}
-PATH=${PATH}:${SOLARIS_CSW}:${SOLARIS_CLEARCASE_BIN}
-export PATH
-
-#Changes made to get VNC to work on dev3
-VNC_BIN=/home/vnambiar/GNUvnc
-PATH=${PATH}:${VNC_BIN}
-export PATH
-LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/home/vnambiar/GNUvnc
-export LD_LIBRARY_PATH
-
-ID_USER=`id | awk '{print $1}' | awk -F"(" '{print $2}'| awk -F")" '{print $1}'`
-#CT_VIEW=`cleartool pwv | grep "Set view" | awk '{print $3}'`
-#PS1='${HOSTNAME} [${PWD}][${ID_USER}] [ `if [ -f /JAILID ]; then cat /JAILID; fi` ] \n$ '
-#CT_VIEW=`git branch | grep "*" | awk '{print $2}'`
-if [[ $UID -eq 0 ]]; then
-PS1='${HOSTNAME} [${PWD}][${ID_USER}] [ ${CT_VIEW} ] \n# '
-else
-PS1='${HOSTNAME} [${PWD}][${ID_USER}] [ ${CT_VIEW} ] \n$ '
-fi
-
-export PS1
-
-TERM=dtterm
-export TERM
-
-export MANPATH=${MANPATH}:/opt/csw/man:/usr/share/man
-
-#To make WLG build work the following are needed
-export PATH=${SOLARIS_VIM}:/opt/Forte/SUNWspro/bin:/opt/SUNWspro/bin:/usr/ccs/bin:$PATH
-export CC=CC
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/TimesTen/60_04/lib:/devvob/wlg/ACE_wrappers/ac
-export TPhafbin=/tpcommonvob/haf/bin
-export TPlgbin=/wlgvob/lg/bin
-export TPsgbin=/wlgvob/sg/bin
-
-alias vim="vim-x11"
-alias gvim="vim -g"
-alias gvimdiff="vim -g -d"
-
-fi
 
 ###############################
 # Linux specific ENV variables
@@ -135,51 +41,20 @@ ECLIPSE_BIN=/home/vnambiar/Eclipse_Mars_4_5_0
 NX_BIN=/usr/NX/bin
 ADVENTNET_BIN=~/snmp/AdventNet/C-Agent
 PATH=${ECLIPSE_BIN}:${PATH}:${CLEARCASE_BIN}:${NX_BIN}:${ADVENTNET_BIN}:${CLEARQUEST_BIN}:${WIND_RIVER_LINUX_BIN}
-export MASTER_ROOT=/tpos/tlp/masters
-
-
-#Export perllib for clearquest scripts
-export PERLIB=$PERLIB:/devvob/integration/build_env/perl
 
 #Export this to fix clearcase xlsvtreee core dumps
 export LC_ALL=C
 
-#Add my man path
+#Add my local man dir to manpath
 MY_LOCAL_MAN=~/man
 USR_LOCAL_MAN=/usr/local/share/man
 MANPATH=${MY_LOCAL_MAN}:${MANPATH}:${USR_LOCAL_MAN}
 export MANPATH
 
-#JAVA related env
-#JAVA_HOME is not needed if "java -version" points to the right version
-# This mean /usr/bin/java is pointing to the right thing. To override use JAVA_HOME:
-#export JAVA_HOME=/usr/java/jdk1.6.0_26
-#export PATH=${JAVA_HOME}/jre/bin:${JAVA_HOME}/bin:${PATH}
-export JBOSS_HOME=/view/vnambiar_cas_nvm/standalonevob/jboss/jboss-6.0.0
-export ANT_HOME=/usr/share/apache-ant-1.8.2
-export PATH=${ANT_HOME}/bin:${PATH}
-
-
 CLEARQUEST_LIB_PATH=/opt/rational/clearquest/linux_x86/odbc/lib
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/local/lib:/lib:${CLEARQUEST_LIB_PATH}
 
-ID_USER=`id | awk '{print $1}' | awk -F"(" '{print $2}'| awk -F")" '{print $1}'`
-#CT_VIEW=`cleartool pwv | grep "Set view" | awk '{print $3}'`
-#CT_VIEW=`git branch | grep "*" | awk '{print $2}' 2> /dev/null`
-if [[ $UID -eq 0 ]]; then
-PS1='${ID_USER}@${HOSTNAME} [${PWD}]\n# '
-else
-PS1='${ID_USER}@${HOSTNAME} [${PWD}]\n$ '
-fi
-export PS1
-
-#MIB paths and content. Works only if a base clearcase view is set since
-#/devvob needs to exist.
-MIBS=TP-MIB:OSSGW-MIB:SMLC-MIB:LMU-MIB:LG-MIB:WLG-MIB:AGENT-CONFIG-MIB:SNMPv2-MIB:SG-MIB
-MIBDIRS=/devvob/mibs:/devvob/mibs/ietf:/devvob/mibs/vendor
-export MIBS MIBDIRS
-fi
-
+fi #if [ ${OS_NAME} == "Linux" ]
 
 ################################
 #   CSCOPE DB Location
@@ -188,7 +63,6 @@ fi
 export CSCOPE_DB=
 #This sets where the kernel installs the modules
 #export INSTALL_MOD_PATH=
-
 
 #####################################
 ## Paths
@@ -544,7 +418,7 @@ function ppc82()
     /opt/eldk/usr/bin/ppc_82xx-$1
 }
 
-#Make sure SRC_DIR & SRC_FILE_DB passed to this function is the absolute path
+#Make sure SRC_DIR & SRC_FILE_DB passed to this function are absolute paths
 function add_source_dir()
 {
     SRC_FILE_DB=${1}
@@ -555,26 +429,6 @@ function add_source_dir()
 
     # To get absolute path and not relative paths in the DB file
     pushd /  > /dev/null 2>&1
-
-    # Extract dir and move on when args are passed with SRC_DIR as in build_smlc_db
-    #for x in ${SRC_DIR}
-    #do
-    #  if [ ! -d ${x} ]; then
-    #    echo "  ${x} is NOT PRESENT"
-    #    return 1
-    #  fi
-    #  echo
-    #  echo "  Adding ${x}"
-    #  break
-    #done
-
-    #FILES_TO_FIND="-name '*.c' -o -name '*.h' -o -name '*.cpp' -o -name '*.cxx' -o -name '*.idl' -o -name '*.S' -o -name '*.asm' -o -name '*.make' -o -name '*.mk' -o -name '*.mak' -o -name 'env.*' -o  -name '*.clib' -o -name '*.rules' -o -name 'Makefile' -o -name 'dbadm' -o -name '*.pl'"
-
-    #debug
-    #echo "FILES_TO_FIND=${FILES_TO_FIND}"
-
-    #echo "find ${SRC_DIR} ${FILES_TO_FIND} >> ${SRC_FILE_DB}"
-    #find ${SRC_DIR} ${FILES_TO_FIND} >> ${SRC_FILE_DB}
 
     find ${SRC_DIR} -name '*.c' -o -name '*.hpp' -o -name '*.h' -o -name '*.cpp' -o -name '*.cxx' >> ${SRC_FILE_DB}
     find ${SRC_DIR} -name '*.idl' >> ${SRC_FILE_DB}
@@ -613,7 +467,6 @@ function add_source_dir()
 #Build cscope  database
 function build_db()
 {
-
     if [ ! $1 ]
     then
         echo "usage: build_db db_name directory"
@@ -703,203 +556,6 @@ function build_quick_kernel_db()
     echo "Building ${DB_NAME}, please wait..."
     cscope -b -i ${DB_FILES} -f ${DB_NAME}
     echo "Done"
-}
-
-function build_quick_smlc_db()
-{
-    if [ ! $1 ]
-    then
-        echo "usage: build_quick_smlc_db db_name"
-        echo "Always builds from pwd!!"
-        echo
-        return
-    fi
-
-    DB_FILES=~/cscope/$1.files
-    DB_NAME=~/cscope/$1.out
-
-    echo "rm -fr ${DB_FILES}"
-    rm -fr ${DB_FILES}
-
-    echo "rm -fr ${DB_NAME}"
-    rm -fr ${DB_NAME}
-
-    echo "Building ${DB_FILES}, please wait..."
-
-    #echo "Adding files from `pwd`"
-    #find `pwd` -name '*.c' -o -name '*.h' -o -name '*.cpp' -o -name '*.cxx' -o -name '*.idl' -o -name '*.S' -o -name '*.asm' -o -name '*.make' -o -name '*.mk' -o -name '*.mak' -o -name 'env.*' -o -name '*.clib' -o -name '*.rules' -o -name 'Makefile' -o -name 'dbadm' -o -name '*.pl' -o -name '*.spec' -o -wholename '*/tptran' -prune -o -wholename '*/tool' -prune -o -wholename '*/mkl' -prune -o -wholename '*/obj' -prune -o -wholename '*/dependencies' -prune -o -wholename '*/wrlinux' -prune -o -wholename '*/kernel' -prune -o -wholename '*/osinstall' -prune -o -wholename '*/rpm' -prune  -o -wholename '*/smlc' -prune  > ${DB_FILES}
-
-    echo "Adding files from /devvob/lp/smlc-l"
-    find /devvob/lp/smlc-l -name '*.c' -o -name '*.h' -o -name '*.cpp' -o -name '*.cxx' -o -name '*.idl' -o -name '*.S' -o -name '*.asm' -o -name '*.make' -o -name '*.mk' -o -name '*.mak' -o -name 'env.*' -o -name '*.clib' -o -name '*.rules' -o -name 'Makefile' -o -name 'dbadm' -o -name '*.pl' -o -name '*.spec' -o -wholename '*/tptran' -prune -o -wholename '*/tool' -prune -o -wholename '*/mkl' -prune -o -wholename '*/obj' -prune -o -wholename '*/dependencies' -prune -o -wholename '*/wrlinux' -prune -o -wholename '*/kernel' -prune -o -wholename '*/osinstall' -prune -o -wholename '*/rpm' -prune  -o -wholename '*/smlc' -prune  > ${DB_FILES}
-
-    echo "Adding files from /devvob/frameworks"
-    add_source_dir ${DB_FILES} /devvob/frameworks
-
-    echo "Adding files from /devvob/lp/common"
-    add_source_dir ${DB_FILES} /devvob/lp/common
-
-    #echo "Adding files from /devvob/lp/nubbin"
-    #add_source_dir ${DB_FILES} /devvob/lp/nubbin
-
-    echo "Building ${DB_NAME}, please wait..."
-    cscope -b -i ${DB_FILES} -f ${DB_NAME}
-    echo "Done"
-}
-
-# build smlc db
-function build_smlc_db()
-{
-    if [ ! $1 ]
-    then
-        echo "usage: build_smlc_db db_name directory"
-        echo
-        return
-    fi
-
-    if [ ! $2 ]
-    then
-        echo "usage: build_smlc db_name directory"
-        echo
-        return
-    fi
-
-    if [ ! -d $2 ]
-    then
-        echo "build_db ERROR: $2 is not a valid directory name"
-        echo
-        return
-    fi
-
-    #Save current dir on stack
-    pushd $2 > /dev/null 2>&1
-
-    #Define paths
-    echo
-    PROJ_DIR=`pwd`  #Note this HAS to be absolute path
-    echo "PROJ_DIR = $PROJ_DIR"
-    BUILD_FILES=~/cscope/$1.files
-    BUILD_DB=~/cscope/$1.out
-
-    #Check to see if cscope dir exists, if not create it
-    if [ ! -d ~/cscope ]
-    then
-        echo -n "cscope DB directory does not exist, creating one now..."
-        mkdir ~/cscope
-        echo "DONE"
-    else
-        echo "Using exisiting cscope DB directory"
-    fi
-
-    #Delete previous database to force recreation
-    echo -n "Deleting previous DB..."
-    #rm -f ~/cscope/cscope.out
-    rm -f ${BUILD_DB}
-    rm -f ${BUILD_FILES}
-    echo "DONE"
-
-    #FILES_TO_FIND="-name '*.c' -o -name '*.h' -o -name '*.cpp' -o -name '*.cxx' "\
-        #"-o -name '*.idl' -o -name '*.S' -o -name '*.asm' -o -name '*.make' -o -name '*.mk' "\
-        #"-o -name '*.mak' -o -name 'env.*' -o -name '*.clib' -o -name '*.rules' -o -name 'Makefile' "\
-        #"-o -name 'dbadm' "\
-        #"-o -name '*.pl' "\
-        #"-o -name '*.spec' "
-
-    #NOTE: The last "-o" has to be maintained for this work
-    DIRS_TO_EXCLUDE=" -wholename '*/tptran' -prune -o -wholename '*/tool' -prune -o -wholename '*/mkl' -prune -o -wholename '*/obj' -prune -o -wholename '*/dependencies' -prune -o -wholename '*/wrlinux' -prune -o "
-
-    #Add this to the end of the proj directory
-    PROJ_DIR=${PROJ_DIR}${DIRS_TO_EXCLUDE}
-
-    #debug
-    echo "DIRS_TO_EXCLUDE = ${DIRS_TO_EXCLUDE}"
-    echo "PROJ_DIR = ${PROJ_DIR}"
-
-    #Now build an absolute path file database to give to cscope to parse
-    # Add source directories to parse in here
-    echo "Scanning for sources..."
-    add_source_dir ${BUILD_FILES} "${PROJ_DIR}"
-    add_source_dir ${BUILD_FILES} /devvob/frameworks
-    add_source_dir ${BUILD_FILES} /devvob/lp/common
-    add_source_dir ${BUILD_FILES} /devvob/lp/nubbin
-
-    echo "  DONE"
-
-    #Now build cscope database
-    echo -n "Building cscope DB at $BUILD_DB..."
-    cd ~/cscope
-    cscope -b -i $BUILD_FILES -f $BUILD_DB
-    echo "DONE"
-
-    #Revert to original execution dir
-    popd > /dev/null 2>&1
-}
-
-#Build gtags database
-function build_db_gtags()
-{
-
-    if [ ! $1 ]
-    then
-        echo "usage: build_db_gtags db_name directory"
-        echo
-        return
-    fi
-
-    if [ ! $2 ]
-    then
-        echo "usage: build_db_gtags db_name directory"
-        echo
-        return
-    fi
-
-    if [ ! -d $2 ]
-    then
-        echo "build_db_gtags ERROR: $2 is not a valid directory name"
-        echo
-        return
-    fi
-
-    #Save current dir on stack
-    pushd $2 > /dev/null 2>&1
-
-    #Define paths
-    echo
-    PROJ_DIR=`pwd`  #Note this HAS to be absolute path
-    echo "PROJ_DIR = $PROJ_DIR"
-
-    #Delete previous database to force recreation
-    if [ -e ~/cscope/$1 ]; then
-        echo -n "~/cscope/$1 exists. Deleting it..."
-        rm -fr ~/cscope/$1
-        echo "DONE"
-    fi
-    mkdir -p ~/cscope/$1
-    BUILD_FILES=~/cscope/$1/$1.files
-    BUILD_DB=~/cscope/$1
-
-    #Check to see if cscope dir exists, if not create it
-    if [ ! -d ~/cscope ]
-    then
-        echo -n "cscope DB directory does not exist, creating one now..."
-        mkdir ~/cscope
-        echo "DONE"
-    else
-        echo "Using exisiting cscope DB directory"
-    fi
-
-    #Now build an absolute path file database to give to gtags to parse
-    # Add source directories to parse in here
-    echo "Scanning for sources..."
-    add_source_dir ${BUILD_FILES} ${PROJ_DIR}
-    echo "  DONE"
-
-    #Now build cscope database
-    echo -n "Building gtags DB at $BUILD_DB..."
-    gtags -f ${BUILD_FILES} ${BUILD_DB}
-    echo "DONE"
-
-    #Revert to original execution dir
-    popd > /dev/null 2>&1
 }
 
 function build_kernel_db()
@@ -1024,15 +680,6 @@ function build_db_driver_wrl30()
     build_db tptran_include_wrl30 /devvob/lp/smlc-l/tptran/wrl_30/include
 }
 
-function build_db_driver_wrl15()
-{
-    build_db tptran_udp_wrl15 /devvob/lp/smlc-l/tptran/wrl_15/drivers/tptran_udp
-    build_db tptran_mux_wrl15 /devvob/lp/smlc-l/tptran/wrl_15/drivers/tptran_mux
-    build_db tptran_t3_wrl15 /devvob/lp/smlc-l/tptran/wrl_15/drivers/tptran_t3/t3_672_src
-    build_db tptran_kprobe_wrl15 /devvob/lp/smlc-l/tptran/wrl_15/drivers/tptran_kprobe
-    build_db tptran_include_wrl15 /devvob/lp/smlc-l/tptran/wrl_15/include
-}
-
 function create_vnc_desktop()
 {
     if [ ! "$1" ]; then
@@ -1142,7 +789,6 @@ function show_desktops()
 {
     ls ~/.vnc/*.pid 2> /dev/null
 }
-
 
 function myide()
 {
@@ -1320,15 +966,14 @@ function cmdls()
     echo "dent_c_files - Search and indent all c files within a directory"
     echo "dent_h_files - Search and indent all h files within a directory"
     echo "ct_cmds - Lists all clearcase shortcuts I have implemented"
-    echo "mount_h_drive - mounts trueposition h drive"
-    echo "mount_t_drive - mounts trueposition t drive"
+    echo "mount_h_drive - mounts h drive"
+    echo "mount_t_drive - mounts t drive"
     echo "mount_clearcase - mounts clearcase vob and view servers paths"
     echo "ctmakeview - Creates a clearcase view"
     echo "ctremoveview - Deletes a clearcase view"
     echo "ctmakelabel - Labels a clearcase branch (Everything under /devvob)"
     echo
 }
-
 
 function build_prj()
 {
@@ -1488,7 +1133,6 @@ function newcpp()
     rm .tmp
 }
 
-
 function newc()
 {
     echo "Generating $1 in current directory"
@@ -1550,7 +1194,6 @@ function refresh()
 
 function vprofile()
 {
-    #gvim ~/.bash_profile
     vim ~/.bash_profile
 }
 
@@ -1563,7 +1206,7 @@ function vterm()
 
 function vtemplate()
 {
-    gvim -o ~/templates/c_h/c_template.c ~/templates/c_h/c_template.h ~/templates/c_h/c_template.cpp
+    vim -o ~/templates/c_h/c_template.c ~/templates/c_h/c_template.h ~/templates/c_h/c_template.cpp
 }
 
 function maketags()
@@ -1986,7 +1629,6 @@ dent_h_files()
     done
 }
 
-
 mount_iso()
 {
     ISO_IMAGE=${1}
@@ -2172,7 +1814,6 @@ function ct_cmds()
     CMD_LST=${CMD_LST}"- ctcontribclean \n\t Deletes all *.contrib files that are left around after a branch merge in the target branch in all subdirectories starting from the main path\n\n"
     echo -e ${CMD_LST}
 }
-
 
 function ctlspriv()
 {
@@ -2576,10 +2217,7 @@ function build_smlc_ilmu_rim
     rimpkg
 }
 
-
 ########## RIM end   ###########
-
-############ Start simplivity stuff ########
 
 function build_rfs_db()
 {
@@ -2705,7 +2343,7 @@ function make_and_pkg()
     pushd ${SRC_PATH}
     source svtsetup
     #since our BOM is no longer the same as that expected by svtsetup
-    #export SVTBUILDSTATUS=0
+    export SVTBUILDSTATUS=0
     genbuild debug
     # Allows up to 8 parallel threads
     make -j 8 all
@@ -2905,8 +2543,6 @@ function tmux_list
     #or tmux list-sessions
     tmux ls
 }
-
-########### End simplivity stuff #########
 
 function load_arm_tools
 {
