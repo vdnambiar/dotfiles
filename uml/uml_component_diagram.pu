@@ -14,22 +14,22 @@ node node1 {
             [Component 1] as comp1
             [Component 2] as comp2
             [Component 3] as comp3 
-            [Component 4] as comp4
-            [Component 5] as comp5
-            [Component 6] as comp6
+            [Component 4] as comp4 #LightGreen
+            [Component 5] as comp5 #SkyBlue
+            [Component 6] as comp6 #SkyBlue
             [Component 8] as comp8
             [Component 9] as comp9
         }
 
         package "Package 3" as pkg3 {
             [Component 10] as comp_10
-            [Component 11] as comp_11
-            [Component 12] as comp_12
+            [Component 11] as comp_11 #Green
+            [Component 12] as comp_12 #Red
         }
 
         package "Package 4" as pkg4 {
             [Component 13] as comp_13
-            [Component 14] as comp_14
+            [Component 14] as comp_14 #Yellow
             [Component 17] as comp_17
         }
 
@@ -61,5 +61,12 @@ comp_11 --> comp5
 comp_12 --> comp8
 
 comp_10 -- comp4
+
+legend
+**LEGEND**
+# Items in Yellow are Existing components
+# Items in Blue are Newly added components
+# Items in Green are existing components that need to be modified
+end legend
 
 @enduml
