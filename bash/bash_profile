@@ -21,6 +21,17 @@ OS_NAME=`uname -s`
 ################################
 if [ ${OS_NAME} == "CYGWIN_NT-10.0" ]; then
     PS1='\[\033[32m\]\u@\h \[\033[33m\]\w\[\033[0m\]\n$ '
+elif [ ${OS_NAME} == "Darwin" ]; then
+    #Make sure you have installed xcode before running this
+    source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash
+    source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-prompt.sh
+
+    #if you installed google's OSX git installer from here, then use these source lines
+    #https://sourceforge.net/projects/git-osx-installer/
+    #use this instead:
+    #source /usr/local/git/contrib/completion/git-completion.bash
+    #source /usr/local/git/contrib/completion/git-prompt.sh
+    PS1='\[\033[32m\]\u@\h \[\033[33m\]\w\[\033[36m\]`__git_ps1`\[\033[0m\]\n$ '
 else
     PS1='\[\033[32m\]\u@\h \[\033[33m\]\w\[\033[36m\]`__git_ps1`\[\033[0m\]\n$ '
 fi
@@ -80,7 +91,11 @@ export CSCOPE_DB=
 #####################################
 ## Aliases
 #####################################
-alias ls="ls --color=tty"
+if [ ${OS_NAME} == "Darwin" ]; then
+    alias ls="ls -G"  #Colorize on Mac
+else
+    alias ls="ls --color=tty"  #Colorize on Linux
+fi
 alias hddir="cd /tpcommonvob/LPDCommon/hd_health/src"
 alias pmdir="cd /wlgvob/tools/pm/src"
 alias install_server="xterm -e telnet 192.168.79.199"
