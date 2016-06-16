@@ -283,6 +283,9 @@ nmap <silent> <leader>f :NERDTreeFind<cr>
 " Toggle NERDTreeTabs
 nmap <silent> <leader>n :NERDTreeTabsToggle<cr>
 
+"Prevent nerdtree from opening in the GUI on startup
+let g:nerdtree_tabs_open_on_gui_startup=0
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "               CTRLP 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
